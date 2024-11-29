@@ -38,10 +38,19 @@ graalvmNative {
         buildArgs.add("--static")
         buildArgs.add("--libc=musl")
       }
-      buildArgs.add("--initialize-at-build-time=io.ktor,kotlin")
-      buildArgs.add("--initialize-at-build-time=ch.qos.logback")
-      buildArgs.add("--initialize-at-build-time=org.slf4j.helpers")
-      buildArgs.add("--initialize-at-build-time=org.slf4j.LoggerFactory")
+
+      val list = arrayOf(
+        "io.ktor,kotlin",
+        "kotlinx.io.SegmentPool",
+        "ch.qos.logback",
+        "org.slf4j.helpers",
+        "org.slf4j.LoggerFactory",
+      )
+
+      list.forEach {
+        buildArgs.add("--initialize-at-build-time=$it")
+      }
+
       buildArgs.add("-H:+InstallExitHandlers")
       buildArgs.add("-H:+ReportExceptionStackTraces")
       buildArgs.add("-H:+ReportUnsupportedElementsAtRuntime")
